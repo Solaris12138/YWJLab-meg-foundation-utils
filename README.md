@@ -133,17 +133,3 @@ in `configs/configs_datasets.py` (`openneuro_datasets`, `zic_datasets`, `downstr
   (1000 ms window, 300 ms overlap, 250 Hz), FFT band (2–90 Hz) and analysis percentile.
 - **`configs/configs_datasets.py`** — Dataset lists and rejection criteria. Note that in this
   snapshot the dataset lists are commented out and must be re-enabled before running the pipeline.
-
-## Known state / caveats
-
-- The project is unfinished and was handed over as-is; scripts were last run against a Linux
-  environment (FreeSurfer at `/usr/local/freesurfer/8.1.0`, `nccl` DDP backend, `rm -rf` based
-  cleanup in `2-preprocessing.py`), so they are not directly runnable on Windows.
-- `2-preprocessing.py` and `4-BEM.py` modify / delete data in place and require the raw datasets
-  from `1-download.py` plus a locally computed `fsaverage` BEM solution.
-- Mixed import styles inside `models/`: `encoder.py`, `predictor.py`, `reconstructor.py`,
-  `adjacency_aware_transformer.py` and `local_global_transformer.py` pull in their siblings as
-  top-level modules (`from transformer import ...`), while `models/*.py` uses relative imports, so
-  the model package cannot be imported as-is (`models/components` has to be on `sys.path`, or the
-  imports rewritten).
-- `utils/augmentaton.py` keeps its original (misspelled) filename for compatibility.
